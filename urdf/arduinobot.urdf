@@ -8,4 +8,31 @@
       </geometry>
     </visual>
   </link>
+  <link name="base_plate">
+    <visual>
+      <origin rpy="0 0 0" xyz="-0.39 -0.363 0"/>
+      <geometry>
+        <mesh filename="package://simple_robot_arm/mesh/round_plate.STL" scale="0.01 0.01 0.01"/>
+      </geometry>
+    </visual>
+  </link>
+  <joint name ="base_link_to_plate" type="fixed">
+    <parent link="base_link"/>
+    <child link = "base_plate"/>
+    <origin xyz="0 0 0.307"/>
+  </joint>
+  <link name="base_plate_support">
+    <visual>
+      <origin rpy="0 0 0" xyz="-0.28 -0.42 0"/>
+      <geometry>
+        <mesh filename="package://simple_robot_arm/mesh/plate.STL" scale="0.01 0.01 0.01"/>
+      </geometry>
+    </visual>
+  </link>
+  <joint name ="base_plate_to_support" type="fixed">
+    <parent link="base_plate"/>
+    <child link = "base_plate_support"/>
+    <origin xyz="0 0 0.05"/>
+  </joint>
+
 </robot>
