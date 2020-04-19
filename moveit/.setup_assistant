@@ -1,0 +1,11 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: simple_robot_arm
+    relative_path: urdf/arduinobot.urdf
+    xacro_args: ""
+  SRDF:
+    relative_path: config/arduinobot.srdf
+  CONFIG:
+    author_name: Antonio Brandi
+    author_email: antonio.brandi@outlook.it
+    generated_timestamp: 1587141720
