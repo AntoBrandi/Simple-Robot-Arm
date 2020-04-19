@@ -30,7 +30,7 @@ void servo_cb( const std_msgs::Float64MultiArray& msg )
   servo_joint2.write(min + (range * angle2));
 }
 
-ros::Subscriber<std_msgs::Float64MultiArray> sub("/move_group/fake_controller_joint_states", servo_cb );
+ros::Subscriber<std_msgs::Float64MultiArray> sub("/servo_actuator", servo_cb );
 ros::NodeHandle nh;
 
 void setup()
