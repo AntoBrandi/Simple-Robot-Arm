@@ -35,9 +35,15 @@ ros::NodeHandle nh;
 
 void setup()
 {
+  // set the attached pin of each joint
   servo_joint0.attach(JOINT0);
   servo_joint1.attach(JOINT1);
   servo_joint2.attach(JOINT2);
+  // set an initial value for all the joints
+  servo_joint0.write(90);
+  servo_joint1.write(90);
+  servo_joint2.write(90);
+  // cerate and initialize a ROS node that subscibes the topic /servo_actuator
   nh.initNode();
   nh.subscribe(sub);
 }

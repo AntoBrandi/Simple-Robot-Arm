@@ -1,0 +1,158 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="arduinobot">
+
+    <!-- Useful Variables (Properties) -->
+    <xacro:property name="PI" value="3.14159265359" />
+    <xacro:property name="low_limit_base_plate_rotation" value="-${PI/2}" />
+    <xacro:property name="up_limit_base_plate_rotation" value="${PI/2}" />
+    <xacro:property name="low_limit_forward_drive_arm_rotation" value="-${PI/2}" />
+    <xacro:property name="up_limit_forward_drive_arm_rotation" value="${PI/2}" />
+    <xacro:property name="low_limit_horizontal_arm_rotation" value="-${PI/2}" />
+    <xacro:property name="up_limit_horizontal_arm_arm_rotation" value="${PI/2}" />
+
+    <!-- Links -->
+    <link name="world"/>
+
+    <link name="base_link">
+        <visual>
+            <origin rpy="0 0 0" xyz="-0.5 -0.5 0"/>
+            <geometry>
+                <mesh filename="package://simple_robot_arm/mesh/basement.STL" scale="0.01 0.01 0.01"/>
+            </geometry>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="-0.5 -0.5 0"/>
+            <geometry>
+                <mesh filename="package://simple_robot_arm/mesh/basement.STL" scale="0.01 0.01 0.01"/>
+            </geometry>
+        </collision>
+    </link> 
+
+    <link name="base_plate">
+        <visual>
+            <origin rpy="0 0 0" xyz="-0.39 -0.363 0"/>
+            <geometry>
+                <mesh filename="package://simple_robot_arm/mesh/round_plate.STL" scale="0.01 0.01 0.01"/>
+            </geometry>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="-0.39 -0.363 0"/>
+            <geometry>
+                <mesh filename="package://simple_robot_arm/mesh/round_plate.STL" scale="0.01 0.01 0.01"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <link name="base_plate_support">
+        <visual>
+            <origin rpy="0 0 0" xyz="-0.28 -0.42 0"/>
+            <geometry>
+                <mesh filename="package://simple_robot_arm/mesh/plate.STL" scale="0.01 0.01 0.01"/>
+            </geometry>
+        </visual>
+        <collision>
+            <origin rpy="0 0 0" xyz="-0.28 -0.42 0"/>
+            <geometry>
+                <mesh filename="package://simple_robot_arm/mesh/plate.STL" scale="0.01 0.01 0.01"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <link name="forward_drive_arm">
+        <visual>
+            <origin rpy=" 0 -1.57075 1.57075" xyz="0.19 0.06 -0.08"/>
+            <geometry>
+                <mesh filename="package://simple_robot_arm/mesh/forward_drive_arm.STL" scale="0.01 0.01 0.01"/>
+            </geometry>
+        </visual>
+        <collision>
+            <origin rpy=" 0 -1.57075 1.57075" xyz="0.19 0.06 -0.08"/>
+            <geometry>
+                <mesh filename="package://simple_robot_arm/mesh/forward_drive_arm.STL" scale="0.01 0.01 0.01"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <link name="horizontal_arm">
+        <visual>
+            <origin rpy="1.57075 0 1.57075" xyz="-0.03 -0.4 -0.06"/>
+            <geometry>
+                <mesh filename="package://simple_robot_arm/mesh/horizontal_arm.STL" scale="0.01 0.01 0.01"/>
+            </geometry>
+        </visual>
+        <collision>
+            <origin rpy="1.57075 0 1.57075" xyz="-0.03 -0.4 -0.06"/>
+            <geometry>
+                <mesh filename="package://simple_robot_arm/mesh/horizontal_arm.STL" scale="0.01 0.01 0.01"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <link name="claw_support">
+        <visual>
+            <origin rpy="0 0 1.57075" xyz="0 -0.05 -0.15"/>
+            <geometry>
+                <mesh filename="package://simple_robot_arm/mesh/claw_support.STL" scale="0.01 0.01 0.01"/>
+            </geometry>
+        </visual>
+        <collision>
+            <origin rpy="0 0 1.57075" xyz="0 -0.05 -0.15"/>
+            <geometry>
+                <mesh filename="package://simple_robot_arm/mesh/claw_support.STL" scale="0.01 0.01 0.01"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <link name="tool_link"></link>
+
+    
+    <!-- Joints -->
+    <joint name="joint_world" type="fixed">
+        <parent link="world" />
+        <child link="base_link" />
+        <origin xyz="0 0 0" rpy="0 0 0" />
+    </joint>
+    
+    <joint name ="joint_1" type="revolute">
+        <parent link="base_link"/>
+        <child link = "base_plate"/>
+        <origin xyz="0 0 0.307"/>
+        <axis xyz="0 0 1"/>
+        <limit lower="-1.57075" upper="1.57075" effort="1000.0" velocity="0.5"/>
+    </joint>
+
+    <joint name ="base_plate_to_support" type="fixed">
+        <parent link="base_plate"/>
+        <child link = "base_plate_support"/>
+        <origin xyz="0 0 0.05"/>
+    </joint>
+
+    <joint name ="joint_2" type="revolute">
+        <parent link="base_plate_support"/>
+        <child link = "forward_drive_arm"/>
+        <origin xyz="0 0 0.28"/>
+        <axis xyz="1 0 0"/>
+        <limit lower="-1.57075" upper="1.57075" effort="1000.0" velocity="0.5"/>
+    </joint>
+
+    <joint name ="joint_3" type="revolute">
+        <parent link="forward_drive_arm"/>
+        <child link = "horizontal_arm"/>
+        <origin xyz="0 0 0.8"/>
+        <axis xyz="1 0 0"/>
+        <limit lower="-1.57075" upper="1.57075" effort="1000.0" velocity="0.5"/>
+    </joint>
+
+    <joint name ="horizontal_arm_to_claw_support" type="fixed">
+        <parent link="horizontal_arm"/>
+        <child link = "claw_support"/>
+        <origin xyz="0 0.82 0"/>
+    </joint>
+
+    <joint name ="claw_support_to_tool" type="fixed">
+        <parent link="claw_support"/>
+        <child link = "tool_link"/>
+        <origin xyz="0 0 0"/>
+    </joint>
+
+</robot>
