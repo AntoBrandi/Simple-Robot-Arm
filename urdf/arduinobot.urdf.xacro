@@ -30,43 +30,28 @@
 
     <link name="base_plate">
         <visual>
-            <origin rpy="0 0 0" xyz="-0.39 -0.363 0"/>
+            <origin rpy="0 0 0" xyz="-0.39 -0.39 -0.56"/>
             <geometry>
-                <mesh filename="package://simple_robot_arm/mesh/round_plate.STL" scale="0.01 0.01 0.01"/>
+                <mesh filename="package://simple_robot_arm/mesh/base_plate.STL" scale="0.01 0.01 0.01"/>
             </geometry>
         </visual>
         <collision>
-            <origin rpy="0 0 0" xyz="-0.39 -0.363 0"/>
+            <origin rpy="0 0 0" xyz="-0.39 -0.39 -0.56"/>
             <geometry>
                 <mesh filename="package://simple_robot_arm/mesh/round_plate.STL" scale="0.01 0.01 0.01"/>
-            </geometry>
-        </collision>
-    </link>
-
-    <link name="base_plate_support">
-        <visual>
-            <origin rpy="0 0 0" xyz="-0.28 -0.42 0"/>
-            <geometry>
-                <mesh filename="package://simple_robot_arm/mesh/plate.STL" scale="0.01 0.01 0.01"/>
-            </geometry>
-        </visual>
-        <collision>
-            <origin rpy="0 0 0" xyz="-0.28 -0.42 0"/>
-            <geometry>
-                <mesh filename="package://simple_robot_arm/mesh/plate.STL" scale="0.01 0.01 0.01"/>
             </geometry>
         </collision>
     </link>
 
     <link name="forward_drive_arm">
         <visual>
-            <origin rpy=" 0 -1.57075 1.57075" xyz="0.19 0.06 -0.08"/>
+            <origin rpy=" 0 -${PI/2} ${PI/2}" xyz="0.19 0.06 -0.08"/>
             <geometry>
                 <mesh filename="package://simple_robot_arm/mesh/forward_drive_arm.STL" scale="0.01 0.01 0.01"/>
             </geometry>
         </visual>
         <collision>
-            <origin rpy=" 0 -1.57075 1.57075" xyz="0.19 0.06 -0.08"/>
+            <origin rpy=" 0 -${PI/2} ${PI/2}" xyz="0.19 0.06 -0.08"/>
             <geometry>
                 <mesh filename="package://simple_robot_arm/mesh/forward_drive_arm.STL" scale="0.01 0.01 0.01"/>
             </geometry>
@@ -75,13 +60,13 @@
 
     <link name="horizontal_arm">
         <visual>
-            <origin rpy="1.57075 0 1.57075" xyz="-0.03 -0.4 -0.06"/>
+            <origin rpy="${PI/2} 0 ${PI/2}" xyz="-0.03 -0.4 -0.06"/>
             <geometry>
                 <mesh filename="package://simple_robot_arm/mesh/horizontal_arm.STL" scale="0.01 0.01 0.01"/>
             </geometry>
         </visual>
         <collision>
-            <origin rpy="1.57075 0 1.57075" xyz="-0.03 -0.4 -0.06"/>
+            <origin rpy="${PI/2} 0 ${PI/2}" xyz="-0.03 -0.4 -0.06"/>
             <geometry>
                 <mesh filename="package://simple_robot_arm/mesh/horizontal_arm.STL" scale="0.01 0.01 0.01"/>
             </geometry>
@@ -90,13 +75,13 @@
 
     <link name="claw_support">
         <visual>
-            <origin rpy="0 0 1.57075" xyz="0 -0.05 -0.15"/>
+            <origin rpy="0 0 ${PI/2}" xyz="0 -0.05 -0.15"/>
             <geometry>
                 <mesh filename="package://simple_robot_arm/mesh/claw_support.STL" scale="0.01 0.01 0.01"/>
             </geometry>
         </visual>
         <collision>
-            <origin rpy="0 0 1.57075" xyz="0 -0.05 -0.15"/>
+            <origin rpy="0 0 ${PI/2}" xyz="0 -0.05 -0.15"/>
             <geometry>
                 <mesh filename="package://simple_robot_arm/mesh/claw_support.STL" scale="0.01 0.01 0.01"/>
             </geometry>
@@ -118,21 +103,15 @@
         <child link = "base_plate"/>
         <origin xyz="0 0 0.307"/>
         <axis xyz="0 0 1"/>
-        <limit lower="-1.57075" upper="1.57075" effort="1000.0" velocity="0.5"/>
-    </joint>
-
-    <joint name ="base_plate_to_support" type="fixed">
-        <parent link="base_plate"/>
-        <child link = "base_plate_support"/>
-        <origin xyz="0 0 0.05"/>
+        <limit lower="-${PI/2}" upper="${PI/2}" effort="1000.0" velocity="0.5"/>
     </joint>
 
     <joint name ="joint_2" type="revolute">
-        <parent link="base_plate_support"/>
+        <parent link="base_plate"/>
         <child link = "forward_drive_arm"/>
         <origin xyz="0 0 0.28"/>
         <axis xyz="1 0 0"/>
-        <limit lower="-1.57075" upper="1.57075" effort="1000.0" velocity="0.5"/>
+        <limit lower="-${PI/2}" upper="${PI/2}" effort="1000.0" velocity="0.5"/>
     </joint>
 
     <joint name ="joint_3" type="revolute">
@@ -140,7 +119,7 @@
         <child link = "horizontal_arm"/>
         <origin xyz="0 0 0.8"/>
         <axis xyz="1 0 0"/>
-        <limit lower="-1.57075" upper="1.57075" effort="1000.0" velocity="0.5"/>
+        <limit lower="-${PI/2}" upper="${PI/2}" effort="1000.0" velocity="0.5"/>
     </joint>
 
     <joint name ="horizontal_arm_to_claw_support" type="fixed">
