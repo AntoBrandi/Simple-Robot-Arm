@@ -1,6 +1,6 @@
 <launch>
     <node pkg="rosserial_python" type="serial_node.py" name= "osservo" respawn="true" output="screen">
-        <param name="port" value="/dev/ttyACM0" />
+        <param name="port" value="/dev/ttyACM1" />
     </node>
     <node pkg="simple_robot_arm" type="request_handler.py" name="request_handler" respawn="true" output="screen">
     </node>

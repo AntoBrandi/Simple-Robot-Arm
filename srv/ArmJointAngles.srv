@@ -1,0 +1,7 @@
+int64 set_joint_1
+int64 set_joint_2
+int64 set_joint_3
+---
+int64 get_joint_1
+int64 get_joint_2
+int64 get_joint_3
