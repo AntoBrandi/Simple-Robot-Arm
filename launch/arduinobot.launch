@@ -7,4 +7,5 @@
         <param name="port" value="/dev/ttyACM0" />
     </node>
     <node pkg="simple_robot_arm" type="request_handler.py" name="request_handler" respawn="true" output="screen"></node>
-</launch>
+
+</launch> 
